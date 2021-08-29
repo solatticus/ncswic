@@ -92,17 +92,36 @@ namespace mcaffee
             //DATA: Q Society
             var collectiondescriptiondecoded = "Q Society"; // from OG post
             var md5 = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(collectiondescriptiondecoded));
-            
-            //Console.WriteLine("Verified: [Q Society] = " + BitConverter.ToString(md5).Replace("-", " ") + " Initialization Vector or Key or Who the fuck knows? LULZZZ");
-            //Console.WriteLine();
+
+            Console.WriteLine("Verified: [Q Society] = " + BitConverter.ToString(md5).Replace("-", " ") + " Initialization Vector or Key or Who the fuck knows? LULZZZ");
+            Console.WriteLine();
+
+            //DATA: iv5BbDul
+            var randoIV = "iv5BbDul"; // text from the Green & White image??? 
+            var randoIVMd5 = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(randoIV));
+
+            Console.WriteLine("Verified: [iv5BbDul] = " + BitConverter.ToString(randoIVMd5).Replace("-", " ") + " MD5 hash of the string 'iv5BbDul' ");
+            Console.WriteLine();
 
             var crypto = new AesCryptographyService(); // the crypto class from below
 
             var decrypted0Bytes = crypto.Decrypt(epsilon, testkey0, md5);   // get the bytes
             var decrypted0 = Encoding.Unicode.GetString(decrypted0Bytes);   // use unicode encoding again?
 
-            Console.WriteLine($"Unicode|{nameof(decrypted0)}:{decrypted0}");
+            // !詯뇝뉋壇쵡踂鞘韶냑롍渉ᅤ஫Ａ탾ꭧꞛ銋፶ᨻ㫎쑀һ⢀聩灢ᑠ䮭㚮≖㦷魯⑨ࠩ榭ﲣ겄�涘ⷿᬲ࿈캼ᖢ焏筐넠냋矆늀﹟゛癭⿱ف萝㵈ꋱ䁠䁝㥗⯡횲䳝ک꬚⢾쁱᣻
+            Console.WriteLine($"Original Unicode using '{collectiondescriptiondecoded}' hashed to MD5 as an init vector\n{nameof(decrypted0)}:\n\t{decrypted0}");
+
+            var decryptedRando01Bytes = crypto.Decrypt(epsilon, testkey0, randoIVMd5);  // string -> bytes
+            var decrtpytedWithRandoString = Encoding.Unicode.GetString(decryptedRando01Bytes); // bytes -> unicode
             
+            // 鶹몦흪ठ镛꯴퐤�踂鞘韶냑롍渉ᅤ஫Ａ탾ꭧꞛ銋፶ᨻ㫎쑀һ⢀聩灢ᑠ䮭㚮≖㦷魯⑨ࠩ榭ﲣ겄�涘ⷿᬲ࿈캼ᖢ焏筐넠냋矆늀﹟゛癭⿱ف萝㵈ꋱ䁠䁝㥗⯡횲䳝ک꬚⢾쁱᣻
+            Console.WriteLine($"Gren/White Text using '{randoIV}' hashed to MD5 as an init vector\n{nameof(decrtpytedWithRandoString)}:\n\t{decrtpytedWithRandoString}");
+
+            var newDecryptedKey0 = crypto.Decrypt(epsilon, testkey0, randoIVMd5); // just seeing what the text from that green/white image results in
+            Console.WriteLine("Trying Key:\n\t" + BitConverter.ToString(newDecryptedKey0).Replace("-", "") + "   IV0: " + BitConverter.ToString(randoIVMd5).Replace("-", ""));
+            Console.WriteLine("To Unicode String:\n\t" + Encoding.Unicode.GetString(newDecryptedKey0));
+            Console.WriteLine();
+
             #region initial "test" stuff from the posts
             // Console.WriteLine("Epsilon: " + epsilon_b64);
             // Console.WriteLine("B64 Decoded: " + BitConverter.ToString(epsilon).Replace("-", ""));
