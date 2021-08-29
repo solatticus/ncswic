@@ -1,5 +1,7 @@
 # ncswic
 
+Running this yourself: [HOWTO.md](howto.md)
+
 whole rabbits
 
 notes are in [notes.md](notes.md)
@@ -121,4 +123,4 @@ To String2<?l6v BNcNL  kA"  w 9p@5]?R ; Ur  ҭY W2:2˻ug1!?{  s- H# W)[   
 John McAfee.
 ```
 
-check the notes.md
+check the [notes.md](notes.md)
